@@ -1,0 +1,60 @@
+# -----------------------------------------------------------------------------
+# 
+# This file is part of fun_with_templates.
+# 
+# fun_with_templates is free software: you can redistribute it and/or modify it
+# under the terms of the "Do What The Fuck You Want To Public License", Version
+# 2, as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.
+# 
+# THE PROJECT "fun_with_templates" IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+# KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+# MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
+# EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES
+# OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE,
+# ARISING FROM, OUT OF OR IN CONNECTION WITH "fun_with_templates" OR THE USE OR
+# OTHER DEALINGS IN THE SOFTWARE.
+# 
+# SPDX-License-Identifier: WTFPL
+# 
+# -----------------------------------------------------------------------------
+
+---
+maxColumn: 80
+blockIndicator: "-"
+exclude:
+  - '*.md'
+
+types:
+  - pattern: '*.hpp'
+    comment: '// '
+  - pattern: '*.tpp'
+    comment: '// '
+  - pattern: '*.cpp'
+    comment: '// '
+  - pattern: 'CMakeLists.txt'
+    comment: '# '
+  - pattern: '.file_header'
+    comment: '# '
+  - pattern: '.clang-format'
+    comment: '# '
+  - pattern: '*.py'
+    comment: '# '
+
+variables:
+  ProjectName: 'fun_with_templates'
+
+content:
+  - 'This file is part of {ProjectName}.'
+  - '{ProjectName} is free software: you can redistribute it and/or modify it
+    under the terms of the "Do What The Fuck You Want To Public License",
+    Version 2, as published by Sam Hocevar. See http://www.wtfpl.net/ for more
+    details.'
+  - 'THE PROJECT "{ProjectName}" IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
+    KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
+    MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
+    EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+    DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR
+    OTHERWISE, ARISING FROM, OUT OF OR IN CONNECTION WITH "{ProjectName}" OR THE
+    USE OR OTHER DEALINGS IN THE SOFTWARE.'
+  - 'SPDX-License-Identifier: WTFPL'
+...
