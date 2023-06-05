@@ -1,17 +1,46 @@
 # Readme
 
-## License
+## Scope
 
-`fun_with_templates` is free software: you can redistribute it and/or modify it
-under the terms of the "Do What The Fuck You Want To Public License", Version 2,
-as published by Sam Hocevar. See http://www.wtfpl.net/ for more details.
+This small project tries to give an overview of templates in C++ and how they
+can be used. The following topics are introduced:
 
-## Warranty
+- Preprocessor (see 00_preprocessor)
+- Templated classes (see 01_basics)
+- Template parameter packs (see 01_basics)
+- Non-type template parameters (see 01_basics)
+- Template metaprogramming (see 02_metaprogramming)
 
-THE PROJECT `fun_with_templates` IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY
-KIND, EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF
-MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO
-EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR
-OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
-FROM, OUT OF OR IN CONNECTION WITH `fun_with_templates` OR THE USE OR OTHER
-DEALINGS IN THE SOFTWARE.
+### TODOs
+
+The following is currently missing:
+
+- Examples for constrains and concepts
+- Documentation of each sub project with a small explanation
+
+## Usage
+
+The project uses cmake[^1] to setup the build process. The different programs are
+added as executables, so the following steps can be used to build all
+executables:
+
+```bash
+# Create build folder
+mkdir .build
+
+# Step into newly created folder
+cd .build
+
+# Configure cmake
+cmake ..
+
+# Build using make
+make
+```
+
+The commands are executed within the project folder.
+
+To run the programs the executables can be found in their respective subfolder
+in `.build` or by running `make test`.
+
+[^1]: https://cmake.org/
