@@ -23,7 +23,7 @@ add_executable(metaprogramming_fibonacci "fibonacci.hpp" "main.cpp")
 
 # Set target properties, fetures and directories
 target_compile_options(metaprogramming_fibonacci PRIVATE ${FUN_TEMPLATE_WARNING_OPTION})
-target_compile_features(metaprogramming_fibonacci PUBLIC cxx_std_11)
+set_property(TARGET metaprogramming_fibonacci PROPERTY CXX_STANDARD 11)
 
 # Run executable target as a test
 add_test(

@@ -23,7 +23,7 @@ add_executable(basic_log_simple "log.hpp" "log.cpp" "main.cpp")
 
 # Set target properties, fetures and directories
 target_compile_options(basic_log_simple PRIVATE ${FUN_TEMPLATE_WARNING_OPTION})
-target_compile_features(basic_log_simple PUBLIC cxx_std_11)
+set_property(TARGET basic_log_simple PROPERTY CXX_STANDARD 11)
 
 # Run executable target as a test
 add_test(

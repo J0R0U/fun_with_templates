@@ -23,7 +23,7 @@ add_executable(basics_circular_buffer_templated_content_and_size "circular_buffe
 
 # Set target properties, fetures and directories
 target_compile_options(basics_circular_buffer_templated_content_and_size PRIVATE ${FUN_TEMPLATE_WARNING_OPTION})
-target_compile_features(basics_circular_buffer_templated_content_and_size PUBLIC cxx_std_11)
+set_property(TARGET basics_circular_buffer_templated_content_and_size PROPERTY CXX_STANDARD 11)
 
 # Run executable target as a test
 add_test(

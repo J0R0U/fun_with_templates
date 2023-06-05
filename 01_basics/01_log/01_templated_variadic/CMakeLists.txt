@@ -23,7 +23,7 @@ add_executable(basics_log_templated_variadic "log.hpp" "main.cpp")
 
 # Set target properties, fetures and directories
 target_compile_options(basics_log_templated_variadic PRIVATE ${FUN_TEMPLATE_WARNING_OPTION})
-target_compile_features(basics_log_templated_variadic PUBLIC cxx_std_11)
+set_property(TARGET basics_log_templated_variadic PROPERTY CXX_STANDARD 11)
 
 # Run executable target as a test
 add_test(
