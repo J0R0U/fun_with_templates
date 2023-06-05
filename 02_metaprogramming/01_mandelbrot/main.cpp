@@ -34,7 +34,7 @@
  * Size x:     6
  * Size y:     6
  */
-// typedef mandelbrot<tdouble(-2), tdouble(-1.5), tdouble(0.5), 6, 6> picture;
+// typedef mandelbrot<-2, -1.5, 0.5, 6, 6> picture;
 
 /**
  * @brief The small mandelbrot picture type.
@@ -45,7 +45,7 @@
  * Size x:     30
  * Size y:     30
  */
-typedef mandelbrot<tdouble(-2), tdouble(-1.5), tdouble(0.1), 30, 30> picture;
+typedef mandelbrot<-2.0, -1.5, 0.1, 30, 30> picture;
 
 /**
  * @brief The large mandelbrot picture type.
@@ -56,7 +56,7 @@ typedef mandelbrot<tdouble(-2), tdouble(-1.5), tdouble(0.1), 30, 30> picture;
  * Size x:     60
  * Size y:     60
  */
-// typedef mandelbrot<tdouble(-2), tdouble(-1.5), tdouble(0.05), 60, 60> picture;
+// typedef mandelbrot<-2, -1.5, 0.05, 60, 60> picture;
 
 /**
  * @brief The huge mandelbrot picture type.
@@ -67,7 +67,7 @@ typedef mandelbrot<tdouble(-2), tdouble(-1.5), tdouble(0.1), 30, 30> picture;
  * Size x:     120
  * Size y:     120
  */
-// typedef mandelbrot<tdouble(-2), tdouble(-1.5), tdouble(0.025), 120, 120> picture;
+// typedef mandelbrot<-2, -1.5, 0.025, 120, 120> picture;
 
 /**
  * @brief Write a mandelbrot pixel to to a file.

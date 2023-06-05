@@ -19,12 +19,12 @@
 # -----------------------------------------------------------------------------
 
 # Add executable taget
-add_executable(metaprogramming_mandelbrot "double_templates.hpp" "mandelbrot.hpp" "main.cpp")
+add_executable(metaprogramming_mandelbrot "mandelbrot.hpp" "main.cpp")
 
 # Set target properties, fetures and directories
 target_compile_options(metaprogramming_mandelbrot PRIVATE ${FUN_TEMPLATE_WARNING_OPTION})
-target_compile_options(metaprogramming_mandelbrot PUBLIC "-ftemplate-depth=10000")
-target_compile_features(metaprogramming_mandelbrot PUBLIC cxx_std_11)
+target_compile_options(metaprogramming_mandelbrot PUBLIC "-ftemplate-depth=20000")
+target_compile_features(metaprogramming_mandelbrot PUBLIC cxx_std_20)
 
 # Run executable target as a test
 add_test(

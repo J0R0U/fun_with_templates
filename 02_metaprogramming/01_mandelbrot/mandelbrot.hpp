@@ -22,7 +22,7 @@
 #ifndef MANDELBROT_HPP_
 #define MANDELBROT_HPP_
 
-#include "double_templates.hpp"
+#include <cstdint>
 
 /**
  * @brief The maximum depth of the mandelbrot iteration.
@@ -31,16 +31,16 @@
 
 // Forward declaration
 
-template <uint16_t _iteration, typename _x0, typename _y0, typename _x, typename _y>
+template <uint16_t _iteration, double _x0, double _y0, double _x, double _y>
 class mandelbrot_iteration;
 
-template <std::size_t _index, typename _start_x, typename _start_y, typename _step_size, std::size_t _size_x, std::size_t _size_y>
+template <std::size_t _index, double _start_x, double _start_y, double _step_size, std::size_t _size_x, std::size_t _size_y>
 class mandelbrot_pixel;
 
 /**
  * @brief A reference to the next mandelbrot iteration.
  */
-template <bool _check_next, uint16_t _iteration, typename _x0, typename _y0, typename _x, typename _y>
+template <bool _check_next, uint16_t _iteration, double _x0, double _y0, double _x, double _y>
 class mandelbrot_iteration_next {
   public: // Assert that the given values are within expected bounds
     static_assert(_iteration < max_mandelbrot_iteration, "The iteration needs to be smaller than max_mandelbrot_iteration.");
@@ -57,13 +57,13 @@ class mandelbrot_iteration_next {
  *
  * A specialization for the last iteration.
  */
-template <uint16_t _iteration, typename _x0, typename _y0, typename _x, typename _y>
+template <uint16_t _iteration, double _x0, double _y0, double _x, double _y>
 class mandelbrot_iteration_next<false, _iteration, _x0, _y0, _x, _y> {
   private: // Static members
     /**
      * @brief Check if iteration finished because the length of c is bigger then 2.
      */
-    static const constexpr bool quick_diverge{_x::value * _x::value + _y::value * _y::value < 4};
+    static const constexpr bool quick_diverge{_x * _x + _y * _y < 4};
 
   public: // Static member variables
     /**
@@ -79,7 +79,7 @@ class mandelbrot_iteration_next<false, _iteration, _x0, _y0, _x, _y> {
 /**
  * @brief A class that handles the mandelbrot iteration.
  */
-template <uint16_t _iteration, typename _x0, typename _y0, typename _x, typename _y>
+template <uint16_t _iteration, double _x0, double _y0, double _x, double _y>
 class mandelbrot_iteration {
   private: // Static members
     /**
@@ -87,71 +87,71 @@ class mandelbrot_iteration {
      *
      * The iteration is finished if the length of c is bigger then 2 or the maximum iteration depth is reached.
      */
-    static const constexpr bool has_next{(_x::value * _x::value + _y::value * _y::value < 4) && (_iteration + 1 < max_mandelbrot_iteration)};
+    static const constexpr bool has_next{(_x * _x + _y * _y < 4) && (_iteration + 1 < max_mandelbrot_iteration)};
 
     /**
      * @brief The new x value for the next iteration.
      */
-    static const constexpr double newX{_x::value * _x::value - _y::value * _y::value + _x0::value};
+    static const constexpr double newX{_x * _x - _y * _y + _x0};
 
     /**
      * @brief The new y value for the next iteration.
      */
-    static const constexpr double newY{2 * _x::value * _y::value + _y0::value};
+    static const constexpr double newY{2 * _x * _y + _y0};
 
   public: // Typedefs
     /**
      * @brief The value provider of the mandelbrot iteration.
      */
-    typedef mandelbrot_iteration_next<has_next, _iteration + 1, _x0, _y0, tdouble(newX), tdouble(newY)> value_provider;
+    typedef mandelbrot_iteration_next<has_next, _iteration + 1, _x0, _y0, newX, newY> value_provider;
 };
 
 /**
  * @brief A helper class that starts the mandelbrot iteration.
  */
-template <typename _x, typename _y>
+template <double _x, double _y>
 class mandelbrot_iteration_start {
   public: // Typedefs
     /**
      * @brief The start of the iteration.
      */
-    typedef mandelbrot_iteration<0, _x, _y, tdouble(0), tdouble(0)> start;
+    typedef mandelbrot_iteration<0, _x, _y, 0., 0.> start;
 };
 
 /**
  * @brief A class that calculates a mandelbrot pixel value.
  */
-template <std::size_t _index, typename _start_x, typename _start_y, typename _step_size, std::size_t _size_x, std::size_t _size_y>
+template <std::size_t _index, double _start_x, double _start_y, double _step_size, std::size_t _size_x, std::size_t _size_y>
 class mandelbrot_pixel_value {
   public: // Assert that the given values are within expected bounds
-    static_assert(_step_size::value > 0, "The step size needs to be greater then zero.");
+    static_assert(_step_size > 0, "The step size needs to be greater then zero.");
     static_assert(_size_x > 0, "The picture size in the x direction needs to be greater then zero.");
 
   private: // Static members
     /**
      * @brief The x value used for the iteration.
      */
-    static const constexpr double x{_start_x::value + (_index % _size_x) * _step_size::value + _step_size::value / 2};
+    static const constexpr double x{_start_x + (_index % _size_x) * _step_size + _step_size / 2};
 
     /**
      * @brief The y value used for the iteration.
      */
-    static const constexpr double y{_start_y::value + (_size_y - _index / _size_x) * _step_size::value - _step_size::value / 2};
+    static const constexpr double y{_start_y + (_size_y - _index / _size_x) * _step_size - _step_size / 2};
 
   public: // Static member variables
     /**
      * @brief The resulting pixel value.
      */
-    static const constexpr uint8_t value{mandelbrot_iteration_start<tdouble(x), tdouble(y)>::start::value_provider::value};
+    static const constexpr uint8_t value{mandelbrot_iteration_start<x, y>::start::value_provider::value};
 };
 
 /**
  * @brief A class that is a reference to the next value.
  */
-template <bool _has_next, std::size_t _index, typename _start_x, typename _start_y, typename _step_size, std::size_t _size_x, std::size_t _size_y>
+template <bool _has_next, std::size_t _index, double _start_x, double _start_y, double _step_size, std::size_t _size_x, std::size_t _size_y>
 class mandelbrot_pixel_next {
   public: // Assert that the given values are within expected bounds
-    static_assert(_step_size::value > 0, "The step size needs to be greater then zero.");
+    static_assert(_step_size > 0, "The step size needs to be greater then zero.");
     static_assert(_size_x > 0, "The picture size in the x direction needs to be greater then zero.");
     static_assert(_size_y > 0, "The picture size in the y direction needs to be greater then zero.");
 
@@ -167,10 +167,10 @@ class mandelbrot_pixel_next {
  *
  * Specialization for the last pixel reference.
  */
-template <std::size_t _index, typename _start_x, typename _start_y, typename _step_size, std::size_t _size_x, std::size_t _size_y>
+template <std::size_t _index, double _start_x, double _start_y, double _step_size, std::size_t _size_x, std::size_t _size_y>
 class mandelbrot_pixel_next<false, _index, _start_x, _start_y, _step_size, _size_x, _size_y> {
   public: // Assert that the given values are within expected bounds
-    static_assert(_step_size::value > 0, "The step size needs to be greater then zero.");
+    static_assert(_step_size > 0, "The step size needs to be greater then zero.");
     static_assert(_size_x > 0, "The picture size in the x direction needs to be greater then zero.");
     static_assert(_size_y > 0, "The picture size in the y direction needs to be greater then zero.");
 
@@ -184,10 +184,10 @@ class mandelbrot_pixel_next<false, _index, _start_x, _start_y, _step_size, _size
 /**
  * @brief A class that corresponds to a mandelbrot pixel.
  */
-template <std::size_t _index, typename _start_x, typename _start_y, typename _step_size, std::size_t _size_x, std::size_t _size_y>
+template <std::size_t _index, double _start_x, double _start_y, double _step_size, std::size_t _size_x, std::size_t _size_y>
 class mandelbrot_pixel {
   public: // Assert that the given values are within expected bounds
-    static_assert(_step_size::value > 0, "The step size needs to be greater then zero.");
+    static_assert(_step_size > 0, "The step size needs to be greater then zero.");
     static_assert(_size_x > 0, "The picture size in the x direction needs to be greater then zero.");
     static_assert(_size_y > 0, "The picture size in the y direction needs to be greater then zero.");
     static_assert(_index < _size_x * _size_y, "The picture index is out of bounds.");
@@ -207,10 +207,10 @@ class mandelbrot_pixel {
 /**
  * @brief A class that creates a mandelbrot set at compile time.
  */
-template <typename _start_x, typename _start_y, typename _step_size, std::size_t _size_x, std::size_t _size_y>
+template <double _start_x, double _start_y, double _step_size, std::size_t _size_x, std::size_t _size_y>
 class mandelbrot {
   public: // Assert that the given values are within expected bounds
-    static_assert(_step_size::value > 0, "The step size needs to be greater then zero.");
+    static_assert(_step_size > 0, "The step size needs to be greater then zero.");
     static_assert(_size_x > 0, "The picture size in the x direction needs to be greater then zero.");
     static_assert(_size_y > 0, "The picture size in the y direction needs to be greater then zero.");
 
@@ -224,17 +224,17 @@ class mandelbrot {
     /**
      * @brief The x start value.
      */
-    static const constexpr double start_x{_start_x::value};
+    static const constexpr double start_x{_start_x};
 
     /**
      * @brief The x start value.
      */
-    static const constexpr double start_y{_start_y::value};
+    static const constexpr double start_y{_start_y};
 
     /**
      * @brief The step size of each pixel.
      */
-    static const constexpr double step_size{_step_size::value};
+    static const constexpr double step_size{_step_size};
 
     /**
      * @brief The x size of the picture.
