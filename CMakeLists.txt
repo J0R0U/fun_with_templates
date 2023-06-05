@@ -46,6 +46,7 @@ endif()
 # Check if current project is the main project
 if(CMAKE_PROJECT_NAME STREQUAL PROJECT_NAME)
     # Disable extensions, only the standart should be allowed
+    set(CXX_STANDARD_REQUIRED ON)
     set(CMAKE_CXX_EXTENSIONS OFF)
 
     # include CTest to run default executable
@@ -56,3 +57,4 @@ endif()
 add_subdirectory(00_preprocessor)
 add_subdirectory(01_basics)
 add_subdirectory(02_metaprogramming)
+add_subdirectory(03_concepts)

@@ -21,7 +21,7 @@
 # Add executable taget
 add_executable(basics_array_templated_split "array.hpp" "array.tpp" "main.cpp")
 
-# Set target properties, fetures and directories
+# Set target properties
 target_compile_options(basics_array_templated_split PRIVATE ${FUN_TEMPLATE_WARNING_OPTION})
 set_property(TARGET basics_array_templated_split PROPERTY CXX_STANDARD 11)
 

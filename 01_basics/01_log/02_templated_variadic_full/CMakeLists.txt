@@ -21,7 +21,7 @@
 # Add executable taget
 add_executable(basics_log_templated_variadic_full "log.hpp" "main.cpp")
 
-# Set target properties, fetures and directories
+# Set target properties
 target_compile_options(basics_log_templated_variadic_full PRIVATE ${FUN_TEMPLATE_WARNING_OPTION})
 set_property(TARGET basics_log_templated_variadic_full PROPERTY CXX_STANDARD 11)
 

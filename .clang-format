@@ -27,6 +27,7 @@ AlignConsecutiveAssignments: 'true'
 AlignConsecutiveDeclarations: 'true'
 AllowShortBlocksOnASingleLine: 'false'
 AllowShortIfStatementsOnASingleLine: Never
+BreakBeforeConceptDeclarations: 'true'
 BreakBeforeBraces: Custom
 BreakConstructorInitializers: BeforeColon
 ColumnLimit: '0'
@@ -44,5 +45,6 @@ SpaceBeforeCtorInitializerColon: 'true'
 Standard: Cpp11
 UseTab: Never
 BraceWrapping:
+    SplitEmptyFunction: true
     AfterFunction: true
 ...

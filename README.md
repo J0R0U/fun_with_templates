@@ -15,7 +15,6 @@ can be used. The following topics are introduced:
 
 The following is currently missing:
 
-- Examples for constrains and concepts
 - Documentation of each sub project with a small explanation
 
 ## Usage

@@ -21,7 +21,7 @@
 # Add executable taget
 add_executable(metaprogramming_fibonacci "fibonacci.hpp" "main.cpp")
 
-# Set target properties, fetures and directories
+# Set target properties
 target_compile_options(metaprogramming_fibonacci PRIVATE ${FUN_TEMPLATE_WARNING_OPTION})
 set_property(TARGET metaprogramming_fibonacci PROPERTY CXX_STANDARD 11)
 

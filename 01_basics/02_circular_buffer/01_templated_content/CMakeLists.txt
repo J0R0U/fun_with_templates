@@ -21,7 +21,7 @@
 # Add executable taget
 add_executable(basics_circular_buffer_templated "circular_buffer.hpp" "main.cpp")
 
-# Set target properties, fetures and directories
+# Set target properties
 target_compile_options(basics_circular_buffer_templated PRIVATE ${FUN_TEMPLATE_WARNING_OPTION})
 set_property(TARGET basics_circular_buffer_templated PROPERTY CXX_STANDARD 11)
 

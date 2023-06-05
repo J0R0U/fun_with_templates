@@ -19,14 +19,14 @@
 # -----------------------------------------------------------------------------
 
 # Add executable taget
-add_executable(basics_array_hardcoded "array.hpp" "array.cpp" "main.cpp")
+add_executable(concepts_log "logger.hpp" "logger.tpp" "matrix.hpp" "matrix.cpp" "main.cpp")
 
 # Set target properties
-target_compile_options(basics_array_hardcoded PRIVATE ${FUN_TEMPLATE_WARNING_OPTION})
-set_property(TARGET basics_array_hardcoded PROPERTY CXX_STANDARD 11)
+target_compile_options(concepts_log PRIVATE ${FUN_TEMPLATE_WARNING_OPTION})
+set_property(TARGET concepts_log PROPERTY CXX_STANDARD 20)
 
 # Run executable target as a test
 add_test(
-    NAME basics::array::hardcoded
-    COMMAND basics_array_hardcoded
+    NAME concepts::log
+    COMMAND concepts_log
 )
