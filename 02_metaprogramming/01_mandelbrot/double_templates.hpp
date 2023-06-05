@@ -27,13 +27,6 @@
 #include <limits>
 
 /**
- * @brief Convert double to fixed size decimal number for passing doubles in
- *        value parameters.
- */
-#define tdouble_fixed_const(_value) \
-    tdouble_fixed<tdouble_fixed_to_value(_value)>
-
-/**
  * @brief The factor for converting form double to fixed size decimal number and
  *        back.
  */
@@ -70,102 +63,10 @@ class tdouble_fixed {
 };
 
 /**
- * @brief Define the default double converter.
+ * @brief Convert double to fixed size decimal number for passing doubles as
+ *        values in template parameters.
  */
 #define tdouble(_value) \
-    tdouble_fixed_const(_value)
-
-/**
- * @brief Define the addition of two template doubles.
- */
-template <typename _lhs, typename _rhs>
-class tdouble_add {
-  public:
-    /**
-     * @brief The resulting double value.
-     */
-    using value = tdouble(_lhs::value + _rhs::value);
-};
-
-/**
- * @brief Define the subtract of two template doubles.
- */
-template <typename _lhs, typename _rhs>
-class tdouble_sub {
-  public:
-    /**
-     * @brief The resulting double value.
-     */
-    using value = tdouble(_lhs::value - _rhs::value);
-};
-
-/**
- * @brief Define the multiply of two template doubles.
- */
-template <typename _lhs, typename _rhs>
-class tdouble_mul {
-  public:
-    using value = tdouble(_lhs::value *_rhs::value);
-};
-
-/**
- * @brief Define the divide of two template doubles.
- */
-template <typename _lhs, typename _rhs>
-class tdouble_div {
-  public:
-    /**
-     * @brief The resulting double value.
-     */
-    using value = tdouble(_lhs::value / _rhs::value);
-};
-
-/**
- * @brief Define greater comparison of two template doubles.
- */
-template <typename _lhs, typename _rhs>
-class tdouble_greater {
-  public:
-    /**
-     * @brief The resulting double value.
-     */
-    static const constexpr bool value{_lhs::value > _rhs::value};
-};
-
-/**
- * @brief Define greater equal comparison of two template doubles.
- */
-template <typename _lhs, typename _rhs>
-class tdouble_greater_equal {
-  public:
-    static const constexpr bool value{_lhs::value >= _rhs::value};
-};
-
-/**
- * @brief Define equal comparison of two template doubles.
- */
-template <typename _lhs, typename _rhs>
-class tdouble_equal {
-  public:
-    static const constexpr bool value{_lhs::value == _rhs::value};
-};
-
-/**
- * @brief Define lower equal comparison of two template doubles.
- */
-template <typename _lhs, typename _rhs>
-class tdouble_lower_equal {
-  public:
-    static const constexpr bool value{_lhs::value <= _rhs::value};
-};
-
-/**
- * @brief Define lower comparison of two template doubles.
- */
-template <typename _lhs, typename _rhs>
-class tdouble_lower {
-  public:
-    static const constexpr bool value{_lhs::value < _rhs::value};
-};
+    tdouble_fixed<tdouble_fixed_to_value(_value)>
 
 #endif // DOUBLE_TEMPLATES_HPP_

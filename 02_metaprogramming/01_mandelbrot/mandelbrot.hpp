@@ -59,6 +59,12 @@ class mandelbrot_iteration_next {
  */
 template <uint16_t _iteration, typename _x0, typename _y0, typename _x, typename _y>
 class mandelbrot_iteration_next<false, _iteration, _x0, _y0, _x, _y> {
+  private: // Static members
+    /**
+     * @brief Check if iteration finished because the length of c is bigger then 2.
+     */
+    static const constexpr bool quick_diverge{_x::value * _x::value + _y::value * _y::value < 4};
+
   public: // Static member variables
     /**
      * @brief The value of the iteration.
@@ -66,50 +72,38 @@ class mandelbrot_iteration_next<false, _iteration, _x0, _y0, _x, _y> {
 #if max_mandelbrot_iteration == 0
     static const constexpr uint8_t value{0};
 #else
-    static const constexpr uint8_t value{_iteration * 255 / max_mandelbrot_iteration};
+    static const constexpr uint8_t value{quick_diverge ? 255 : _iteration * 255 / max_mandelbrot_iteration};
 #endif
 };
 
 /**
- * @brief A class that for the mandelbrot iteration.
+ * @brief A class that handles the mandelbrot iteration.
  */
 template <uint16_t _iteration, typename _x0, typename _y0, typename _x, typename _y>
 class mandelbrot_iteration {
-  private: // Typedefs
+  private: // Static members
     /**
-     * @brief A helper to calculate the next iteration.
+     * @brief Indicates if the iteration is finished.
+     *
+     * The iteration is finished if the length of c is bigger then 2 or the maximum iteration depth is reached.
      */
-    using helper_x2_y2 = typename tdouble_sub<
-        typename tdouble_mul<_x, _x>::value,
-        typename tdouble_mul<_y, _y>::value>::value;
+    static const constexpr bool has_next{(_x::value * _x::value + _y::value * _y::value < 4) && (_iteration + 1 < max_mandelbrot_iteration)};
 
     /**
-     * @brief A helper to calculate the next iteration.
+     * @brief The new x value for the next iteration.
      */
-    using helper_xy2 = typename tdouble_mul<
-        tdouble(2),
-        typename tdouble_mul<_x, _y>::value>::value;
+    static const constexpr double newX{_x::value * _x::value - _y::value * _y::value + _x0::value};
 
     /**
-     * @brief The next x value.
+     * @brief The new y value for the next iteration.
      */
-    using new_x = typename tdouble_add<helper_x2_y2, _x0>::value;
-
-    /**
-     * @brief The next y value.
-     */
-    using new_y = typename tdouble_add<helper_xy2, _y0>::value;
-
-    /**
-     * @brief Tests if the number is diverging.
-     */
-    using test_lower = tdouble_lower<helper_x2_y2, tdouble(4)>;
+    static const constexpr double newY{2 * _x::value * _y::value + _y0::value};
 
   public: // Typedefs
     /**
      * @brief The value provider of the mandelbrot iteration.
      */
-    typedef mandelbrot_iteration_next<(test_lower::value && (_iteration + 1) < max_mandelbrot_iteration), _iteration + 1, _x0, _y0, new_x, new_y> value_provider;
+    typedef mandelbrot_iteration_next<has_next, _iteration + 1, _x0, _y0, tdouble(newX), tdouble(newY)> value_provider;
 };
 
 /**
@@ -130,60 +124,25 @@ class mandelbrot_iteration_start {
 template <std::size_t _index, typename _start_x, typename _start_y, typename _step_size, std::size_t _size_x, std::size_t _size_y>
 class mandelbrot_pixel_value {
   public: // Assert that the given values are within expected bounds
-    static_assert(tdouble_greater<_step_size, tdouble(0)>::value, "The step size needs to be greater then zero.");
+    static_assert(_step_size::value > 0, "The step size needs to be greater then zero.");
     static_assert(_size_x > 0, "The picture size in the x direction needs to be greater then zero.");
 
-  private: // Typedefs
-    /**
-     * @brief Helper to calculate the x value.
-     */
-    using helper_offset_x_num = tdouble((_index % _size_x));
-
-    /**
-     * @brief Helper to calculate the y value.
-     */
-    using helper_offset_y_num = tdouble((_size_y - _index / _size_x));
-
-    /**
-     * @brief Half pixel offset.
-     */
-    using helper_neg_half_step_size = typename tdouble_div<_step_size, tdouble(-2)>::value;
-
-    /**
-     * @brief Helper to calculate the x value.
-     */
-    using helper_offset_x = typename tdouble_mul<helper_offset_x_num, _step_size>::value;
-
-    /**
-     * @brief Helper to calculate the y value.
-     */
-    using helper_offset_y = typename tdouble_mul<helper_offset_y_num, _step_size>::value;
-
-    /**
-     * @brief Helper to calculate the x value.
-     */
-    using helper_offset_x_norm = typename tdouble_add<helper_offset_x, helper_neg_half_step_size>::value;
-
-    /**
-     * @brief Helper to calculate the y value.
-     */
-    using helper_offset_y_norm = typename tdouble_add<helper_offset_y, helper_neg_half_step_size>::value;
-
+  private: // Static members
     /**
      * @brief The x value used for the iteration.
      */
-    using x = typename tdouble_add<_start_x, helper_offset_x_norm>::value;
+    static const constexpr double x{_start_x::value + (_index % _size_x) * _step_size::value + _step_size::value / 2};
 
     /**
      * @brief The y value used for the iteration.
      */
-    using y = typename tdouble_add<_start_y, helper_offset_y_norm>::value;
+    static const constexpr double y{_start_y::value + (_size_y - _index / _size_x) * _step_size::value - _step_size::value / 2};
 
   public: // Static member variables
     /**
      * @brief The resulting pixel value.
      */
-    static const constexpr uint8_t value{mandelbrot_iteration_start<x, y>::start::value_provider::value};
+    static const constexpr uint8_t value{mandelbrot_iteration_start<tdouble(x), tdouble(y)>::start::value_provider::value};
 };
 
 /**
@@ -192,7 +151,7 @@ class mandelbrot_pixel_value {
 template <bool _has_next, std::size_t _index, typename _start_x, typename _start_y, typename _step_size, std::size_t _size_x, std::size_t _size_y>
 class mandelbrot_pixel_next {
   public: // Assert that the given values are within expected bounds
-    static_assert(tdouble_greater<_step_size, tdouble(0)>::value, "The step size needs to be greater then zero.");
+    static_assert(_step_size::value > 0, "The step size needs to be greater then zero.");
     static_assert(_size_x > 0, "The picture size in the x direction needs to be greater then zero.");
     static_assert(_size_y > 0, "The picture size in the y direction needs to be greater then zero.");
 
@@ -211,7 +170,7 @@ class mandelbrot_pixel_next {
 template <std::size_t _index, typename _start_x, typename _start_y, typename _step_size, std::size_t _size_x, std::size_t _size_y>
 class mandelbrot_pixel_next<false, _index, _start_x, _start_y, _step_size, _size_x, _size_y> {
   public: // Assert that the given values are within expected bounds
-    static_assert(tdouble_greater<_step_size, tdouble(0)>::value, "The step size needs to be greater then zero.");
+    static_assert(_step_size::value > 0, "The step size needs to be greater then zero.");
     static_assert(_size_x > 0, "The picture size in the x direction needs to be greater then zero.");
     static_assert(_size_y > 0, "The picture size in the y direction needs to be greater then zero.");
 
@@ -228,7 +187,7 @@ class mandelbrot_pixel_next<false, _index, _start_x, _start_y, _step_size, _size
 template <std::size_t _index, typename _start_x, typename _start_y, typename _step_size, std::size_t _size_x, std::size_t _size_y>
 class mandelbrot_pixel {
   public: // Assert that the given values are within expected bounds
-    static_assert(tdouble_greater<_step_size, tdouble(0)>::value, "The step size needs to be greater then zero.");
+    static_assert(_step_size::value > 0, "The step size needs to be greater then zero.");
     static_assert(_size_x > 0, "The picture size in the x direction needs to be greater then zero.");
     static_assert(_size_y > 0, "The picture size in the y direction needs to be greater then zero.");
     static_assert(_index < _size_x * _size_y, "The picture index is out of bounds.");
@@ -251,7 +210,7 @@ class mandelbrot_pixel {
 template <typename _start_x, typename _start_y, typename _step_size, std::size_t _size_x, std::size_t _size_y>
 class mandelbrot {
   public: // Assert that the given values are within expected bounds
-    static_assert(tdouble_greater<_step_size, tdouble(0)>::value, "The step size needs to be greater then zero.");
+    static_assert(_step_size::value > 0, "The step size needs to be greater then zero.");
     static_assert(_size_x > 0, "The picture size in the x direction needs to be greater then zero.");
     static_assert(_size_y > 0, "The picture size in the y direction needs to be greater then zero.");
 

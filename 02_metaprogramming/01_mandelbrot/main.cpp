@@ -30,22 +30,22 @@
  *
  * Start x:   -2.0
  * Start y:   -1.5
- * Step size:  1.0
- * Size x:     3
- * Size y:     3
+ * Step size:  0.5
+ * Size x:     6
+ * Size y:     6
  */
-typedef mandelbrot<tdouble(-2), tdouble(-1.5), tdouble(1), 3, 3> picture;
+// typedef mandelbrot<tdouble(-2), tdouble(-1.5), tdouble(0.5), 6, 6> picture;
 
 /**
  * @brief The small mandelbrot picture type.
  *
  * Start x:   -2.0
  * Start y:   -1.5
- * Step size:  0.5
- * Size x:     6
- * Size y:     6
+ * Step size:  0.1
+ * Size x:     30
+ * Size y:     30
  */
-// typedef mandelbrot<tdouble(-2), tdouble(-1.5), tdouble(0.5), 6, 6> picture;
+typedef mandelbrot<tdouble(-2), tdouble(-1.5), tdouble(0.1), 30, 30> picture;
 
 /**
  * @brief The large mandelbrot picture type.
