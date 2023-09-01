@@ -3,7 +3,7 @@ SPDX-FileCopyrightText: 2023 J0R0U <https://github.com/J0R0U>
 SPDX-License-Identifier: MIT
 -->
 
-# Readme
+![Logo](./images/logo.svg)
 
 ## Scope
 
@@ -15,6 +15,7 @@ can be used. The following topics are introduced:
 - Template parameter packs (see 01_basics)
 - Non-type template parameters (see 01_basics)
 - Template metaprogramming (see 02_metaprogramming)
+- Template Concepts (see 03_concepts)
 
 ### TODOs
 
