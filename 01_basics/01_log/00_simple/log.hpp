@@ -1,8 +1,8 @@
 // SPDX-FileCopyrightText: 2023 J0R0U <https://github.com/J0R0U>
 // SPDX-License-Identifier: MIT
 
-#ifndef CONSTANTS_HPP_
-#define CONSTANTS_HPP_
+#ifndef LOG_HPP_
+#define LOG_HPP_
 
 /**
  * @brief A type for char strings.
@@ -17,4 +17,4 @@ typedef const char *cstring;
  */
 void log(const cstring &_format, ...);
 
-#endif // CONSTANTS_HPP_
+#endif // LOG_HPP_

@@ -1,8 +1,8 @@
 // SPDX-FileCopyrightText: 2023 J0R0U <https://github.com/J0R0U>
 // SPDX-License-Identifier: MIT
 
-#ifndef CONSTANTS_HPP_
-#define CONSTANTS_HPP_
+#ifndef LOG_HPP_
+#define LOG_HPP_
 
 #include <iostream>
 
@@ -44,4 +44,4 @@ void log(_arg_types... _args)
     std::cout << "\n";
 }
 
-#endif // CONSTANTS_HPP_
+#endif // LOG_HPP_

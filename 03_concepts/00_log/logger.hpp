@@ -1,8 +1,8 @@
 // SPDX-FileCopyrightText: 2023 J0R0U <https://github.com/J0R0U>
 // SPDX-License-Identifier: MIT
 
-#ifndef HASHMAP_HPP_
-#define HASHMAP_HPP_
+#ifndef LOGGER_HPP_
+#define LOGGER_HPP_
 
 #include <concepts>
 #include <ostream>
@@ -59,4 +59,4 @@ void log(const _arg_types &..._args);
 
 #include "logger.tpp"
 
-#endif // HASHMAP_HPP_
+#endif // LOGGER_HPP_

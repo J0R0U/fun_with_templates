@@ -1,8 +1,8 @@
 // SPDX-FileCopyrightText: 2023 J0R0U <https://github.com/J0R0U>
 // SPDX-License-Identifier: MIT
 
-#ifndef CONSTANTS_HPP_
-#define CONSTANTS_HPP_
+#ifndef LOG_HPP_
+#define LOG_HPP_
 
 #include <cstdio>
 
@@ -24,4 +24,4 @@ void log(const cstring &_format, _arg_types... _args)
     printf(_format, _args...);
 }
 
-#endif // CONSTANTS_HPP_
+#endif // LOG_HPP_
